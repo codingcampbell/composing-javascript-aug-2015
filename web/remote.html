@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<title>Presentation Remote</title>
+<meta name="charset" value="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: arial;
+  margin: 0;
+  padding: 0;
+}
+.buttons {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align: center;
+}
+
+.buttons div {
+  display: inline-block;
+  width: 49%;
+  height: 100px;
+  background: #aaa;
+  font-size: 22px;
+  line-height: 100px;
+}
+
+.buttons div:active {
+  background: #444;
+}
+.notes {
+  font-size: 2.4rem;
+}
+</style>
+</head>
+<body>
+<div class="buttons">
+  <div id="prevSlide">Prev Slide</div>
+  <div id="nextSlide">Next Slide</div>
+</div>
+<div class="notes">
+</div>
+<script>
+(function() {
+  var notes = document.querySelector('.notes');
+  var sessionId = '{{sessionId}}';
+  var postEvent = function(event) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {};
+    xhr.open('post', '/r/event/' + sessionId + '/' + event, true);
+    xhr.send();
+  };
+
+  document.getElementById('prevSlide').addEventListener('click', function() {
+    postEvent('prev');
+  });
+  document.getElementById('nextSlide').addEventListener('click', function() {
+    postEvent('next');
+  });
+
+  var evtSource = new EventSource('/r/stream/' + sessionId);
+  evtSource.addEventListener('notes', function(e) {
+    var json;
+    try {
+      json = JSON.parse(e.data);
+    } catch (e) {
+      return;
+    }
+
+    if (json.notes) {
+      notes.innerHTML = json.notes;
+    }
+  });
+}());
+</script>
+</body>
+</html>

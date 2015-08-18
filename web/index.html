@@ -1,0 +1,853 @@
+<!doctype html>
+<html>
+<head>
+<title>Presentation</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="assets/highlight/github-gist.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script src="assets/highlight/highlight.min.js"></script>
+</head>
+<body>
+<section class="bright slide flex center-all">
+  <h1>Composing JavaScript</h1>
+  <a href="http://www.norfolkjs.org/"><img alt="NorfolkJS" src="assets/norfolkjs.png"/></a>
+  <h2>Norfolk.js - August 2015</h2>
+</section>
+
+<section class="bright slide flex center-all">
+  <aside>
+    <ul>
+      <li>I make websites and games</li>
+      <li>My handle is codingcampbell on most sites that matter</li>
+      <li>Easiest way to find me is on Slack, sign up at http://757dev.org/</li>
+      <li>(next) I work at ...</li>
+    </ul>
+  </aside>
+
+  <h1>Matt Campbell</h1>
+  <h2>@codingcampbell</h2>
+  <ul class="icons">
+    <li title="GitHub">&#xf113;</li>
+    <li title="BitBucket">&#xf171;</li>
+    <li title="Twitter">&#xf099;</li>
+    <li title="Slack">&#xf198;</li>
+  </ul>
+</section>
+
+<section class="dark slide flex center-all">
+  <aside>
+    <ul>
+      <li>Agency located in downtown</li>
+      <li>Interesting work, scaling problems</li>
+      <li>Low maintenance, mostly green-field</li>
+      <li>(next) We do work for amazing clients ...</li>
+    </ul>
+  </aside>
+
+  <div class="grow-logo">
+    <div class="circle"></div>
+    <div class="stem"><svg><g><polygon points="4.988,2.296 2.988,83.296 7.373,83.296 5.373,2.296" style="fill: #3A3532;"></polygon></g></svg></div>
+    <div class="leaf bottom left"><svg><g><path d="M52.154,41.873C44.77-2.511,0,0.027,0,0.027l0,0C0,0.027,7.154,42.258,52.154,41.873L52.154,41.873z"></path></g></svg></div>
+    <div class="leaf bottom right"><svg><g><path d="M0,41.873C7.461-2.511,52.154,0.027,52.154,0.027l0,0C52.154,0.027,45,42.258,0,41.873L0,41.873z"></path></g></svg></div>
+    <div class="leaf middle left"><svg><g><path d="M33.846,26.505C29-2.264,0,0.044,0,0.044l0,0C0-0.033,4.615,26.736,33.846,26.505L33.846,26.505z"></path></g></svg></div>
+    <div class="leaf middle right"><svg><g><path d="M0,26.505C4.846-2.264,33.846,0.044,33.846,0.044l0,0C33.769-0.033,29.154,26.736,0,26.505L0,26.505z"></path></g></svg></div>
+    <div class="leaf top left"><svg><g><path d="M20.692,15.544C17.769-2.071,0,0.083,0,0.083l0,0C0,0.083,2.846,15.775,20.692,15.544L20.692,15.544z"></path></g></svg></div>
+    <div class="leaf top right"><svg><g><path d="M0,15.544C2.923-2.071,20.692,0.083,20.692,0.083l0,0C20.692,0.006,17.846,15.699,0,15.544L0,15.544z"></path></g></svg></div>
+  </div>
+</section>
+
+<section class="dark slide flex center-all">
+  <aside>
+    <ul>
+      <li>(next) We have these positions available ...</li>
+    </ul>
+  </aside>
+  <div class="logos">
+    <div class="logo google"></div>
+    <div class="logo youtube"></div>
+    <div class="logo hbo"></div>
+  </div>
+  <div class="logos">
+    <div class="logo rdio"></div>
+    <div class="logo nike"></div>
+    <div class="logo ea"></div>
+  </div>
+</section>
+
+<section class="dark slide flex center-all">
+  <aside>
+    <ul>
+      <li>If you don't see your calling here, e-mail us anyway.
+      <li>jobs@thisisgrow.com is an open door</li>
+      <li>Our workload varies, looking for freelancers</li>
+    </ul>
+  </aside>
+
+  <div class="jobs">
+    <div class="job flex center-all"><img src="assets/job-fox.png"/>VP, Client Engagement</div>
+    <div class="job flex center-all"><img src="assets/job-bear.png"/>Art Director</div>
+  </div>
+  <div class="jobs">
+    <div class="job flex center-all"><img src="assets/job-fox.png"/>Producer</div>
+    <div class="job flex center-all"><img src="assets/job-deer.png"/>Copywriter</div>
+  </div>
+  <h3><a href="http://thisisgrow.com/jobs">thisisgrow.com/jobs</a></h3>
+  <h3><a href="mailto:jobs@thisisgrow.com">jobs@thisisgrow.com</a></h3>
+</section>
+
+<section class="bright slide flex center-all">
+  <aside>
+    <ul>
+      <li>Vertical inheritance</li>
+      <li>Horizontal inheritance</li>
+      <li>Composing/wrapping inheritance</li>
+      <li>(next) but first, how this topic came up...</li>
+    </ul>
+  </aside>
+
+  <h1>We will be exploring</h1>
+  <ul class="align-left">
+    <li class="slide-item">Vertical (prototypes, classes, <code class="inline">Object.create()</code>)</li>
+    <li class="slide-item">Horizontal (mixins)</li>
+    <li class="slide-item">Composition (wrapping, function building)</li>
+  </ul>
+
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>What's the difference?</li>
+      <li>Linda's is becoming more popular due to Object.create() and relaxed memory</li>
+      <li>The other is the vintage, memory-friendly way</li>
+      <li>How many ways can you inherit in JavaScript?</li>
+      <li>Why does `this` work in Linda's?</li>
+      <li>(next) a note on `this` ...</li>
+    </ul>
+  </aside>
+
+  <h3>Linda.js</h3>
+  <code class="lang-js">var Bob = {
+  name: 'Bob',
+  sayHello: function() {
+    console.log('hello, my name is ' + this.name);
+  }
+};</code>
+  <div class="slide-item">
+    <h3>Someone-else.js</h3>
+    <code class="lang-js">var Bob = function() {};
+Bob.prototype.name = 'Bob';
+Bob.prototype.sayHello = function() {
+  console.log('hello, my name is ' + this.name);
+};</code>
+  </div>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Demystifying `this` is outside the "scope" - you could dedicate an entire talk on it</li>
+      <li>In general, object.method() calls `method` with `this` bound to `object`</li>
+      <li>`this` is determined on how it's called. It makes no difference if it's a prototype, plain object, etc</li>
+    </ul>
+  </aside>
+
+  <h2>A note on <code class="inline">`this`</code></h2>
+    <ul>
+      <li class="slide-item">Demystifying <code class="inline">this</code> is outside of "scope" (sorry)</li>
+    </ul>
+
+  <p class="slide-item">For now, just remember: <code class="lang-js">object.method();</code></p>
+  <code class="slide-item lang-js">object.method = function() {
+  // `this` points to `object`
+};</code>
+</section>
+
+<section class="bright slide flex center-all">
+  <h1>Vertical Inheritance</h1>
+  <h2>Prototypes 101</h2>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Prototypes have been around since v1</li>
+      <li>They are vertical because traits pass down to descendants</li>
+      <li>They can emulate classes, but the inverse isn't true</li>
+      <li>This is an example of prototypes acting like a class</li>
+    </ul>
+  </aside>
+
+  <h2>Prototyp(ic)al inheritance</h2>
+  <ul>
+    <li class="slide-item">Arrived in v1 of JavaScript/LiveScript (1995)</li>
+    <li class="slide-item">The only inheritance model "baked in"</li>
+    <li class="slide-item">Prototypes can emulate classes, but the inverse isn't true</li>
+  </ul>
+
+  <div class="slide-item side-by-side">
+  <code class="lang-js">var Animal = function() {
+  // This is the constructor
+};
+
+Animal.prototype.breathe = function() {
+  return "*inhale air*";
+};
+
+Animal.prototype.say = function() {
+  return "something";
+};</code>
+  <code class="lang-js">var Dog = function() {
+  // This is the constructor
+};
+
+Dog.prototype = new Animal();
+
+Dog.prototype.say = function() {
+  return "bark!";
+};
+</code>
+  </div>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Key difference: constructor is not called to invoke inheritance</li>
+      <li>Essentially the same, except static languages can't change classes at runtime</li>
+    </ul>
+  </aside>
+
+  <h2>Similar Java example</h2>
+  <div class="side-by-side">
+    <code class="lang-java">class Animal {
+  String name;
+  public Animal(String name) {
+    this.name = name;
+  }
+
+  public String breathe() {
+    return "*inhale air*";
+  }
+
+  public String say() {
+    return this.name + " says something";
+  }
+}</code>
+    <code class="lang-java">class Dog extends Animal {
+  public Dog(String name) {
+    super(name);
+  }
+
+  public String say() {
+    return this.name + " barks!";
+  }
+}</code>
+  </div>
+
+  <h3>Key differences</h3>
+  <ul>
+    <li class="slide-item">Doesn't need to invoke constructor just to extend</li>
+    <li class="slide-item">Has `<code class="inline lang-java">super</code>` keyword to reference its parent</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Pain point #1: constructor invocation</h2>
+  <h4>Problem:</h4>
+  <div class="side-by-side">
+    <code class="lang-js">var Animal = function() {
+  // This is the constructor
+};
+
+Animal.prototype.breathe = function() {
+  return "*inhale air*";
+};
+
+Animal.prototype.say = function() {
+  return "something";
+};</code>
+    <code class="lang-js">var Dog = function() {
+  // This is the constructor
+};
+
+// Animal() runs during definition!
+Dog.prototype = new Animal();
+
+Dog.prototype.say = function() {
+  return "bark!";
+};</code>
+  </div>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Worth noting that Object.create can do a ton of stuff, was not invented just for this</li>
+      <li>Getters, setters, read-only, etc</li>
+    </ul>
+  </aside>
+
+  <h2>Pain point #1: constructor invocation</h2>
+  <h4>1995 solution: empty constructors</h4>
+  <div class="side-by-side">
+      <code class="lang-js">var Animal = function() {};
+
+Animal.prototype.init = function() {
+  // Actual constructor work goes here
+};</code>
+    <code class="lang-js">var Dog = function() {};
+
+Dog.prototype = new Animal();
+
+// Later:
+var dog = new Dog();
+dog.init();</code>
+  </div>
+
+  <div class="slide-item">
+    <h4>2010 solution: <code class="inline">Object.create()</code></h4>
+    <div class="side-by-side">
+      <code class="lang-js">var Animal = function() {
+  // Constructor work goes here
+}; </code>
+    <code class="lang-js">var Dog = function() {};
+
+// Animal() does NOT run here anymore
+Dog.prototype =
+  Object.create(Animal.prototype);</code>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Pain point #2: calling parent functions</h2>
+  <h4>Problem:</h4>
+  <div class="side-by-side">
+    <code class="lang-js">var Animal = function(name) {
+  this.name = name;
+};
+
+Animal.prototype.say = function() {
+  return this.name + " says something";
+};</code>
+    <code class="lang-js">var Dog = function(name) {
+  // super ???
+};
+
+Dog.prototype =
+  Object.create(Animal.prototype);
+
+Dog.prototype.say = function() {
+  return this.name + " barks!";
+};</code>
+  </div>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>"Relative" meaning you don't have to type the name of the parent class</li>
+    </ul>
+  </aside>
+
+  <h2>Pain point #2: calling parent functions</h2>
+  <h4>Relative solution:</h4>
+  <code class="small">var Dog = function(name) {
+  // Old and deprecated:
+  this._super = this.__proto__.__proto__;
+
+  // Semi-relative (Dog is absolute):
+  this._super = Object.getPrototypeOf(Dog.prototype);
+
+  // Standardized, fully relative, but long:
+  this._super = Object.getPrototypeOf(Object.getPrototypeOf(this));
+
+  // After you determine _super, you can call anything on it like so:
+  this._super.constructor(name);
+};</code>
+
+  <div class="slide-item">
+    <h4>Absolute (manual) solution:</h4>
+    <code class="small">var Dog = function(name) {
+  // Absolute, most compatible, technically brittle
+  Animal.call(this, name);
+};</code>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Complete JavaScript version</h2>
+  <div class="side-by-side">
+    <code class="lang-js">var Animal = function(name) {
+  this.name = name;
+};
+
+Animal.prototype.breathe = function() {
+  return "*inhale air*";
+};
+
+Animal.prototype.say = function() {
+  return this.name + " says something";
+};</code>
+    <code class="lang-js">var Dog = function(name) {
+  Animal.call(this, name);
+};
+
+Dog.prototype =
+  Object.create(Animal.prototype);
+
+Dog.prototype.say = function() {
+  return this.name + " barks!";
+};</code>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Complete Java version</h2>
+  <div class="side-by-side">
+    <code class="lang-java">class Animal {
+  String name;
+  public Animal(String name) {
+    this.name = name;
+  }
+
+  public String breathe() {
+    return "*inhale air*";
+  }
+
+  public String say() {
+    return this.name + " says something";
+  }
+}</code>
+    <code class="lang-java">class Dog extends Animal {
+  public Dog(String name) {
+    super(name);
+  }
+
+  public String say() {
+    return this.name + " barks!";
+  }
+}</code>
+  </div>
+  <h4 class="slide-item align-center">Our prototype knowledge now has 1:1 parity with classical inheritance</h4>
+</section>
+
+<section class="bright slide flex center-all">
+  <aside>
+    <ul>
+      <li>You could stop exploring prototypes here if you are happy with class-like functionality</li>
+      <li>ES6 actually provides syntax just for this</li>
+    </ul>
+  </aside>
+  <h1>JavaScript Classes</h1>
+  <h2 class="slide-item">You can pretend prototypes act just like classes</h2>
+  <h2 class="slide-item">ES6 actually streamlines this</h2>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>I thought I was going to have to make more than one ES6 slide, but this was already so similar to Java</li>
+    </ul>
+  </aside>
+
+  <h2>Complete JavaScript ES6 version</h2>
+  <div class="side-by-side">
+    <code class="lang-js">class Animal {
+
+  constructor(name) {
+    this.name = name;
+  }
+
+  breathe() {
+    return "*inhale air*";
+  }
+
+  say() {
+    return this.name + " says something";
+  }
+}</code>
+    <code class="lang-js">class Dog extends Animal {
+  constructor(name) {
+    super(name);
+  }
+
+  say() {
+    return this.name + " barks!";
+  }
+}</code>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Complete Java version</h2>
+  <div class="side-by-side">
+    <code class="lang-java">class Animal {
+  String name;
+  public Animal(String name) {
+    this.name = name;
+  }
+
+  public String breathe() {
+    return "*inhale air*";
+  }
+
+  public String say() {
+    return this.name + " says something";
+  }
+}</code>
+    <code class="lang-java">class Dog extends Animal {
+  public Dog(String name) {
+    super(name);
+  }
+
+  public String say() {
+    return this.name + " barks!";
+  }
+}</code>
+  </div>
+</section>
+
+<section class="bright slide flex center-all">
+  <aside>
+    <ul>
+      <li>Let's talk about a few things prototypes do different than classes</li>
+      <li>Some features are provided by the dynamic nature of JavaScript</li>
+    </ul>
+  </aside>
+
+  <h1>Beyond Classes</h1>
+  <h2>Advanced Prototypes</h2>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Functions/properties are only undefined if they don't exist anywhere in the prototype chain</li>
+      <li>This was intended to conserve memory. The function exists once on its prototype. Only `this` changes</li>
+      <li>You could place a function on any layer of the chain for different amounts of control</li>
+      <li>This resolution is performed on every call</li>
+      <li>(next) Which brings us to mutations ...</li>
+    </ul>
+  </aside>
+
+  <h2>Prototype chain</h2>
+  <ul>
+    <li class="slide-item">Functions on an object aren't necessarily on the object</li>
+    <li class="slide-item">The function (or property) could exist on the parent prototype</li>
+    <li class="slide-item">Function "calls" are more like "message passing"</li>
+  </ul>
+  <code class="slide-item inline lang-js">dog.breathe();</code>
+  <ul>
+    <li class="slide-item">Does `<code class="inline">dog</code>` have the `<code class="inline">breathe</code>` function? <span class="slide-item">NO.</span></li>
+    <li class="slide-item">Does `<code class="inline lang-js">Dog.prototype</code>` have it? <span class="slide-item">NO.</span></li>
+    <li class="slide-item">Does `<code class="inline lang-js">Animal.prototype</code>` have it? <span class="slide-item">YES.</span>
+      <ul>
+        <li class="slide-item">Call it with `<code class="inline">dog</code>` as `<code class="inline lang-js">this</code>`</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Prototypes are just objects</li>
+      <li>Objects can change dynamically at runtime</li>
+      <li>Prototypes can be changed at runtime</li>
+    </ul>
+  </aside>
+  <h2>Prototype mutation</h2>
+  <ul>
+    <li class="slide-item">Prototypes are just objects</li>
+    <li class="slide-item">Objects can change dynamically at runtime</li>
+    <li class="slide-item">Prototypes can be changed at runtime</li>
+  </ul>
+  <code class="slide-item lang-js">Animal.prototype.beg = function() {
+  return "PLEASE?? :3";
+};</code>
+  <ul>
+    <li class="slide-item">This new function will be available on all Animal instances, present and future</li>
+  </ul>
+</section>
+
+<section class="bright slide flex center-all">
+  <aside>
+    <ul>
+      <li>"Opt in" functionality</li>
+      <li>Called mixins, traits, interfaces</li>
+    </ul>
+  </aside>
+  <h1>Horizontal Inheritance</h1>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Not baked in (yet)</li>
+      <li>Powered by dynamic objects</li>
+      <li>Useless as individuals</li>
+      <li>(next) we just need a way to mix in the functions from Flower...</li>
+    </ul>
+  </aside>
+
+  <h2>Mixins</h2>
+  <ul>
+    <li class="slide-item">Not baked in (yet)</li>
+    <li class="slide-item">Powered by dynamic objects</li>
+    <li class="slide-item">Useless as individuals</li>
+  </ul>
+
+  <div class="side-by-side">
+    <div class="slide-item">
+      <img src="assets/mario.png"/>
+      <code class="lang-js">var Mario = {
+  lives: 3,
+  hp: 1,
+
+  jump() { return "boing!"; },
+  die() { this.lives -= 1; },
+  hit() {
+    this.hp -= 1;
+    if (this.hp === 0) { die(); }
+  }
+};</code>
+    </div>
+    <div class="slide-item">
+      <img src="assets/fireflower.png"/>
+      <code class="lang-js">var Flower = {
+  firePowerUp() {
+    this.hp = 2;
+  },
+
+  fireball() {
+    return "blip!";
+  }
+};</code>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>There are many ways to mix in functions</li>
+      <li>Some strategies prevent collisions</li>
+      <li>Some queue up collisions</li>
+      <li>$.extend, _.extend are common mixers</li>
+    </ul>
+  </aside>
+
+  <h2>Mixin Mixers</h2>
+  <ul>
+    <li class="slide-item">Loop over functions (or properties) of a Mixin</li>
+    <li class="slide-item">Resolve conflicts</li>
+    <li class="slide-item">Assign them to the host object</li>
+  </ul>
+  <code class="slide-item lang-js">var mixer = function(target, mixin) {
+  Object.keys(mixin).forEach(function(prop) {
+    target[prop] = mixin[prop];
+  });
+};</code>
+  <ul>
+    <li class="slide-item">Similar: <code class="inline lang-js">jQuery.extend</code>, <code class="inline lang-js">_.extend</code></li>
+  </ul>
+
+  <code class="slide-item lang-js">mixer(Mario, Flower);</code>
+</section>
+
+<section class="slide fire-mario">
+  <h2>Mixin Mixers</h2>
+  <code class="lang-js">var Mario = {
+  lives: 3,
+  hp: 1,
+  jump() { return "boing!"; },
+  die() { return "game over"; },
+  hit() {
+    this.hp -= 1;
+    if (this.hp === 0) { this.die(); }
+  },
+  firePowerUp() { this.hp = 2; },
+  fireball() { return "blip!"; }
+};</code>
+</section>
+
+<section class="slide">
+  <h2>Real example</h2>
+  <code class="lang-js">var AdminPage = React.createClass({
+  mixins: [Router.Navigation],
+  componentDidMount() {
+    // initialization stuff
+  },
+  render() {
+    // markup
+  }
+});</code>
+</section>
+
+<section class="slide">
+  <h2>Real example</h2>
+  <code class="lang-js">var AdminPage = React.createClass({
+  mixins: [Router.Navigation],
+  willTransitionTo(transition) {
+    if (!this.isLoggedIn()) {
+      transition.redirect('/');
+    }
+  },
+  isLoggedIn() {
+    return window.user !== null;
+  },
+  componentDidMount() {
+    // initialization stuff
+  },
+  render() {
+    // markup
+  }
+});</code>
+</section>
+
+<section class="slide">
+  <h2>Real example</h2>
+  <div class="side-by-side">
+    <code class="lang-js">var AdminPage = React.createClass({
+    mixins:
+      [AuthRoute, Router.Navigation],
+    componentDidMount() {
+      // initialization stuff
+    },
+    render() {
+      // markup
+    }
+  });</code>
+    <code class="lang-js">var AuthRoute = {
+  willTransitionTo(transition) {
+    if (!this.isLoggedIn()) {
+      transition.redirect('/');
+    }
+  },
+  isLoggedIn() {
+    return window.user !== null;
+  }
+};</code>
+  </div>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>An interesting "mix" of solutions</li>
+    </ul>
+  </aside>
+
+  <h2>Mixing Prototypes</h2>
+  <ul>
+    <li class="slide-item">Prototypes are just objects</li>
+    <li class="slide-item">You can mix into them like any other object</li>
+  </ul>
+  <code class="slide-item lang-js">class MarioMix {
+  constructor() {
+    this.lives = 3;
+    this.hp = 1;
+  }
+
+  jump() { return "boing!"; }
+  die() { return "game over"; }
+  hit() {
+    this.hp -= 1;
+    if (this.hp === 0) { this.die(); }
+  }
+}
+
+mixer(MarioMix.prototype, Flower);</code>
+</section>
+
+<section class="bright slide flex center-all">
+  <h1>Composition</h1>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Here are some notes for slide template.</li>
+    </ul>
+  </aside>
+
+  <h2>Function composition</h2>
+  <ul>
+    <li class="slide-item">Creating new functions by wrapping existing functions</li>
+    <li class="slide-item">Generally means you always call the old function</li>
+  </ul>
+
+  <code class="slide-item lang-js">var add = function(a, b) {
+  return a + b;
+};</code>
+
+  <code class="slide-item lang-js">var add10 = function(b) { // Wrap original function
+  return add(10, b);
+};</code>
+
+  <code class="slide-item lang-js">add10(5); // 15</code>
+  <code class="slide-item lang-js">add10 = add.bind(null, 10); // Alternative to wrap</code>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Here are some notes for slide template.</li>
+    </ul>
+  </aside>
+
+  <h2>Function composition</h2>
+  <ul>
+    <li>Creating new functions by wrapping existing functions</li>
+    <li>Generally means you always call the old function</li>
+  </ul>
+
+  <code class="lang-js">var add = function(a, b) {
+  return a + b;
+};</code>
+
+  <code class="slide-item lang-js">var sub = function(a, b) { // Wrap original function
+  return add(a, -b);
+};</code>
+
+  <code class="slide-item lang-js">sub(5, 4); // 1</code>
+</section>
+
+<section class="slide">
+  <aside>
+    <ul>
+      <li>Here are some notes for slide template.</li>
+    </ul>
+  </aside>
+
+  <h2>Function composition</h2>
+  <ul>
+    <li>Wrapping over unknown functions</li>
+  </ul>
+
+
+<code class="slide-item lang-js">var request = function(url) {
+  return "Making ajax call to " + url;
+};</code>
+<code class="slide-item lang-js">var securify = function(fn) {
+  return function(url) {
+    return fn.call(this, url.replace(/^http:/, 'https:'));
+  }
+};</code>
+<code class="slide-item lang-js">var secureRequest = securify(request);
+
+secureRequest('http://google.com/'); // https://google.com
+</code>
+</section>
+
+<section class="bright slide flex center-all">
+  <h1>Abrupt End</h1>
+  <h3 class="slide-item">I ran out of time for more slides.</h3>
+  <h3 class="slide-item">Questions?</h3>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>

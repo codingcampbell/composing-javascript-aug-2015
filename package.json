@@ -1,0 +1,23 @@
+{
+  "name": "presentation",
+  "version": "0.0.1",
+  "description": "presentation",
+  "scripts": {
+    "dev": "node tasks dev",
+    "compile": "node tasks compile",
+    "build": "node tasks build"
+  },
+  "author": "Matt Campbell <matt@mattcampbell.net>",
+  "devDependencies": {
+    "babelify": "^5.0.5",
+    "browserify": "^10.2.6",
+    "compression": "^1.5.1",
+    "connect": "^3.4.0",
+    "del": "^1.2.0",
+    "node-sass": "^3.2.0",
+    "sane": "^1.1.3",
+    "serve-static": "^1.9.2",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.3.0"
+  }
+}
