@@ -8,22 +8,30 @@ var remoteControl = require('./src/js/remote/server');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
-var sass = require('node-sass');
+var flair = require('./lib/flair');
 var sane = require('sane');
 
 process.on('uncaughtException', function(err) {
   console.log(err.message);
 });
 
+var _uncache = function(pattern) {
+  Object.keys(require.cache).forEach(function(key) {
+    if (pattern.test(key)) {
+      delete require.cache[key];
+    }
+  });
+};
+
 var config = {};
 config.jsRoot = './src/js/'
 config.jsMain = config.jsRoot + 'main.js';
-config.scssRoot = './src/scss/';
-config.scssMain = config.scssRoot + 'styles.scss';
+config.styleRoot = './src/js/style/';
+config.styleMain = config.styleRoot + 'styles.js';
 config.web = './web/';
 config.port = 8888;
 config.jsBundle = config.web + 'app.js';
-config.scssBundle = config.web + 'styles.css';
+config.styleBundle = config.web + 'styles.css';
 
 var tasks = {};
 tasks.javascript = function(opts) {
@@ -64,41 +72,27 @@ tasks.javascript = function(opts) {
   b.bundle().pipe(fs.createWriteStream(config.jsBundle));
 };
 
-tasks.sass = function(opts) {
+tasks.styles = function(opts) {
+  _uncache(new RegExp(config.styleRoot));
   opts = opts || {};
 
-  var sassOpts = {
-    file: config.scssMain,
-    outputStyle: 'compressed'
-  };
+  var startTime = Date.now();
 
-  if (!opts.minify) {
-    sassOpts.outputStyle = 'nested';
-    sassOpts.outFile =  ' ';
-    sassOpts.sourceMap =  true;
-    sassOpts.sourceMapEmbed =  true;
-  }
-
-  sass.render(sassOpts, function(err, result) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    fs.writeFile(config.scssBundle, result.css, function(err) {
+  flair.compile(require(config.styleMain), function(compiled) {
+    fs.writeFile(config.styleBundle, compiled, function(err) {
       if (err) {
         console.error('Failed to write css file:', err);
         return;
       }
 
-      console.log(config.scssBundle + ' built in ' + (result.stats.end - result.stats.start) + ' ms');
+      console.log(config.styleBundle + ' built in ' + (Date.now() - startTime) + ' ms');
     });
   });
 
   if (opts.watch) {
     opts.watch = false;
-    var watchCallback = tasks.sass.bind(tasks, opts);
-    var watcher = sane(config.scssRoot, { glob: ['**/*.scss'] });
+    var watchCallback = tasks.styles.bind(tasks, opts);
+    var watcher = sane(config.styleRoot, { glob: ['**/*.js'] });
     watcher.on('change', watchCallback);
     watcher.on('add', watchCallback);
     watcher.on('delete', watchCallback);
@@ -108,21 +102,21 @@ tasks.sass = function(opts) {
 tasks.compile = function() {
   tasks.clean(function() {
     tasks.javascript();
-    tasks.sass();
+    tasks.styles();
   });
 };
 
 tasks.build = function(opts) {
   tasks.clean(function() {
     tasks.javascript({ minify: true });
-    tasks.sass({ minify: true });
+    tasks.styles({ minify: true });
   });
 };
 
 tasks.dev = function() {
   tasks.clean(function() {
     tasks.javascript({ watch: true });
-    tasks.sass({ watch: true });
+    tasks.styles({ watch: true });
     tasks.serve();
   });
 };
@@ -138,7 +132,7 @@ tasks.serve = function() {
 };
 
 tasks.clean = function(callback) {
-  del([config.jsBundle, config.scssBundle], callback);
+  del([config.jsBundle, config.styleBundle], callback);
 };
 
 tasks['default'] = function() {
